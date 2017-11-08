@@ -1,6 +1,6 @@
-import axios from 'axios';
-import merge from 'lodash/merge';
-import omit from 'lodash/omit';
+import axios from 'axios'
+import merge from 'lodash/merge'
+import omit from 'lodash/omit'
 
 import MemoryStore from './memory';
 import { key } from './cache';
@@ -23,6 +23,7 @@ const defaults = {
     adapter: axios.defaults.adapter,
     clearOnStale: true,
     clearOnError: true,
+    readOnError: false,
     debug: false
   },
 
@@ -32,7 +33,7 @@ const defaults = {
       maxAge: 15 * 60 * 1000
     }
   }
-};
+}
 
 // List of disallowed in the per-request config.
 const disallowedPerRequestKeys = ['limit', 'store', 'adapter'];
@@ -45,6 +46,9 @@ const disallowedPerRequestKeys = ['limit', 'store', 'adapter'];
  */
 const makeConfig = function(override = {}) {
   let config = merge({}, defaults.cache, override);
+
+  // Watch out for configuration conflicts
+  if (config.readOnError) config.clearOnStale = false
 
   // Create a cache key method
   config.key = key(config);
