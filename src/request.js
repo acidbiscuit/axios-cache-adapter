@@ -28,6 +28,11 @@ async function request (config, req) {
     return excludeFromCache()
   }
 
+  // Proceed with request if update option is specified
+  if (req.update) {
+    return { config, next }
+  }
+
   try {
     const res = await read(config, req)
 
