@@ -22,7 +22,7 @@ async function request (config, req) {
     return excludeFromCache()
   }
 
-  if (method !== 'get') {
+  if (!req.cache && method !== 'get') {
     await config.store.removeItem(uuid)
 
     return excludeFromCache()
