@@ -10,7 +10,8 @@ async function response (config, req, res) {
   }
 
   if (!config.excludeFromCache) {
-    config.expires = config.maxAge === 0 ? 0 : Date.now() + config.maxAge
+    const maxAge = req.maxAge || config.maxAge
+    config.expires = maxAge === 0 ? 0 : Date.now() + maxAge
 
     if (config.limit) {
       config.debug(`Detected limit: ${config.limit}`)
