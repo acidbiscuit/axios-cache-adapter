@@ -1867,35 +1867,30 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ "./no
 /*!**********************!*\
   !*** ./src/cache.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: read, write, key, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "read", function() { return read; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "write", function() { return write; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "key", function() { return key; });
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_isString__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/isString */ "lodash/isString");
+/* harmony import */ var lodash_isString__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_isString__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash_isFunction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/isFunction */ "lodash/isFunction");
+/* harmony import */ var lodash_isFunction__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_isFunction__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _serialize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./serialize */ "./src/serialize.js");
 
-
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.read = read;
-exports.write = write;
-exports.key = key;
-exports.default = void 0;
-
-__webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-var _isString = _interopRequireDefault(__webpack_require__(/*! lodash/isString */ "lodash/isString"));
-
-var _isFunction = _interopRequireDefault(__webpack_require__(/*! lodash/isFunction */ "lodash/isFunction"));
-
-var _serialize = _interopRequireDefault(__webpack_require__(/*! ./serialize */ "./src/serialize.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
 
 function write(_x, _x2, _x3) {
   return _write.apply(this, arguments);
@@ -1913,7 +1908,7 @@ function _write() {
             _context.prev = 0;
             entry = {
               expires: config.expires,
-              data: (0, _serialize.default)(config, req, res)
+              data: Object(_serialize__WEBPACK_IMPORTED_MODULE_3__["default"])(config, req, res)
             };
             _context.next = 4;
             return config.store.setItem(config.uuid, entry);
@@ -1969,7 +1964,7 @@ function _read() {
   _read = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee2(config, req) {
-    var uuid, entry, error, expires, data, _error;
+    var uuid, entry, error, expires, data, offline, _error;
 
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
@@ -1994,10 +1989,12 @@ function _read() {
             throw error;
 
           case 10:
-            expires = entry.expires, data = entry.data;
+            expires = entry.expires, data = entry.data; // Do not check for stale cache if offline
 
-            if (!(expires !== 0 && expires < Date.now())) {
-              _context2.next = 17;
+            offline = 'onLine' in navigator && !navigator.onLine;
+
+            if (!(!offline && expires !== 0 && expires < Date.now())) {
+              _context2.next = 18;
               break;
             }
 
@@ -2007,11 +2004,11 @@ function _read() {
             _error.message = 'Entry is stale';
             throw _error;
 
-          case 17:
+          case 18:
             config.debug('cache-hit', req.url);
             return _context2.abrupt("return", data);
 
-          case 19:
+          case 20:
           case "end":
             return _context2.stop();
         }
@@ -2022,9 +2019,9 @@ function _read() {
 }
 
 function key(config) {
-  if ((0, _isFunction.default)(config.key)) return config.key;
+  if (lodash_isFunction__WEBPACK_IMPORTED_MODULE_2___default()(config.key)) return config.key;
   var cacheKey;
-  if ((0, _isString.default)(config.key)) cacheKey = function cacheKey(req) {
+  if (lodash_isString__WEBPACK_IMPORTED_MODULE_1___default()(config.key)) cacheKey = function cacheKey(req) {
     return "".concat(config.key, "/").concat(req.url);
   };else cacheKey = function cacheKey(req) {
     return req.url;
@@ -2032,12 +2029,12 @@ function key(config) {
   return cacheKey;
 }
 
-var _default = {
+
+/* harmony default export */ __webpack_exports__["default"] = ({
   read: read,
   write: write,
   key: key
-};
-exports.default = _default;
+});
 
 /***/ }),
 
@@ -2045,30 +2042,27 @@ exports.default = _default;
 /*!***********************!*\
   !*** ./src/config.js ***!
   \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: defaults, makeConfig, mergeRequestConfig, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaults", function() { return defaults; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeConfig", function() { return makeConfig; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeRequestConfig", function() { return mergeRequestConfig; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/merge */ "lodash/merge");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/omit */ "lodash/omit");
+/* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_omit__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _memory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./memory */ "./src/memory.js");
+/* harmony import */ var _cache__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cache */ "./src/cache.js");
 
 
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.mergeRequestConfig = exports.makeConfig = exports.defaults = void 0;
 
-var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "axios"));
 
-var _merge = _interopRequireDefault(__webpack_require__(/*! lodash/merge */ "lodash/merge"));
-
-var _omit = _interopRequireDefault(__webpack_require__(/*! lodash/omit */ "lodash/omit"));
-
-var _memory = _interopRequireDefault(__webpack_require__(/*! ./memory */ "./src/memory.js"));
-
-var _cache = __webpack_require__(/*! ./cache */ "./src/cache.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var noop = function noop() {};
 
@@ -2094,7 +2088,7 @@ var defaults = {
       query: true,
       filter: null
     },
-    adapter: _axios.default.defaults.adapter,
+    adapter: axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.adapter,
     clearOnStale: true,
     clearOnError: true,
     debug: false
@@ -2107,7 +2101,6 @@ var defaults = {
   } // List of disallowed in the per-request config.
 
 };
-exports.defaults = defaults;
 var disallowedPerRequestKeys = ['limit', 'store', 'adapter'];
 /**
  * Make a global config object.
@@ -2118,9 +2111,9 @@ var disallowedPerRequestKeys = ['limit', 'store', 'adapter'];
 
 var makeConfig = function makeConfig() {
   var override = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var config = (0, _merge.default)({}, defaults.cache, override); // Create a cache key method
+  var config = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, defaults.cache, override); // Create a cache key method
 
-  config.key = (0, _cache.key)(config); // If debug mode is on, create a simple logger method
+  config.key = Object(_cache__WEBPACK_IMPORTED_MODULE_4__["key"])(config); // If debug mode is on, create a simple logger method
 
   if (config.debug !== false) {
     config.debug = typeof config.debug === 'function' ? config.debug : debug;
@@ -2129,7 +2122,7 @@ var makeConfig = function makeConfig() {
   } // Create an in memory store if none was given
 
 
-  if (!config.store) config.store = new _memory.default();
+  if (!config.store) config.store = new _memory__WEBPACK_IMPORTED_MODULE_3__["default"]();
   return config;
 };
 /**
@@ -2146,11 +2139,9 @@ var makeConfig = function makeConfig() {
  */
 
 
-exports.makeConfig = makeConfig;
-
 var mergeRequestConfig = function mergeRequestConfig(config) {
   var requestConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var mergedConfig = (0, _merge.default)({}, config, (0, _omit.default)(requestConfig, disallowedPerRequestKeys));
+  var mergedConfig = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, config, lodash_omit__WEBPACK_IMPORTED_MODULE_2___default()(requestConfig, disallowedPerRequestKeys));
 
   if (mergedConfig.debug === true) {
     mergedConfig.debug = debug;
@@ -2159,13 +2150,12 @@ var mergeRequestConfig = function mergeRequestConfig(config) {
   return mergedConfig;
 };
 
-exports.mergeRequestConfig = mergeRequestConfig;
-var _default = {
+
+/* harmony default export */ __webpack_exports__["default"] = ({
   defaults: defaults,
   makeConfig: makeConfig,
   mergeRequestConfig: mergeRequestConfig
-};
-exports.default = _default;
+});
 
 /***/ }),
 
@@ -2173,24 +2163,17 @@ exports.default = _default;
 /*!************************!*\
   !*** ./src/exclude.js ***!
   \************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash_find__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/find */ "lodash/find");
+/* harmony import */ var lodash_find__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_find__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/isEmpty */ "lodash/isEmpty");
+/* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty__WEBPACK_IMPORTED_MODULE_1__);
 
 
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _find = _interopRequireDefault(__webpack_require__(/*! lodash/find */ "lodash/find"));
-
-var _isEmpty = _interopRequireDefault(__webpack_require__(/*! lodash/isEmpty */ "lodash/isEmpty"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function exclude() {
   var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -2205,7 +2188,7 @@ function exclude() {
   } // do not cache request with query
 
 
-  var hasQueryParams = req.url.match(/\?.*$/) || !(0, _isEmpty.default)(req.params);
+  var hasQueryParams = req.url.match(/\?.*$/) || !lodash_isEmpty__WEBPACK_IMPORTED_MODULE_1___default()(req.params);
 
   if (exclude.query && hasQueryParams) {
     debug("Excluding request by query ".concat(req.url));
@@ -2213,7 +2196,7 @@ function exclude() {
   }
 
   var paths = exclude.paths || [];
-  var found = (0, _find.default)(paths, function (regexp) {
+  var found = lodash_find__WEBPACK_IMPORTED_MODULE_0___default()(paths, function (regexp) {
     return req.url.match(regexp);
   });
 
@@ -2225,8 +2208,7 @@ function exclude() {
   return false;
 }
 
-var _default = exclude;
-exports.default = _default;
+/* harmony default export */ __webpack_exports__["default"] = (exclude);
 
 /***/ }),
 
@@ -2234,40 +2216,36 @@ exports.default = _default;
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: setup, setupCache, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setup", function() { return setup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setupCache", function() { return setupCache; });
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/omit */ "lodash/omit");
+/* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_omit__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash/merge */ "lodash/merge");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var lodash_isFunction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash/isFunction */ "lodash/isFunction");
+/* harmony import */ var lodash_isFunction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash_isFunction__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./request */ "./src/request.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./config */ "./src/config.js");
 
-
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.setup = setup;
-exports.setupCache = setupCache;
-exports.default = void 0;
-
-__webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "axios"));
-
-var _omit = _interopRequireDefault(__webpack_require__(/*! lodash/omit */ "lodash/omit"));
-
-var _merge = _interopRequireDefault(__webpack_require__(/*! lodash/merge */ "lodash/merge"));
-
-var _isFunction = _interopRequireDefault(__webpack_require__(/*! lodash/isFunction */ "lodash/isFunction"));
-
-var _request = _interopRequireDefault(__webpack_require__(/*! ./request */ "./src/request.js"));
-
-var _config = __webpack_require__(/*! ./config */ "./src/config.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
 
 /**
  * Configure cache adapter
@@ -2275,10 +2253,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * @param   {object} [config={}] Cache adapter options
  * @returns {object} Object containing cache `adapter` and `store`
  */
+
 function setupCache() {
   var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   // Extend default configuration
-  config = (0, _config.makeConfig)(config); // Axios adapter. Receives the axios request configuration as only parameter
+  config = Object(_config__WEBPACK_IMPORTED_MODULE_6__["makeConfig"])(config); // Axios adapter. Receives the axios request configuration as only parameter
 
   function adapter(_x) {
     return _adapter.apply(this, arguments);
@@ -2295,16 +2274,16 @@ function setupCache() {
           switch (_context.prev = _context.next) {
             case 0:
               // Merge the per-request config with the instance config.
-              reqConfig = (0, _config.mergeRequestConfig)(config, req.cache); // Execute request against local cache
+              reqConfig = Object(_config__WEBPACK_IMPORTED_MODULE_6__["mergeRequestConfig"])(config, req.cache); // Execute request against local cache
 
               _context.next = 3;
-              return (0, _request.default)(reqConfig, req);
+              return Object(_request__WEBPACK_IMPORTED_MODULE_5__["default"])(reqConfig, req);
 
             case 3:
               res = _context.sent;
               next = res.next; // Response is not function, something was in cache, return it
 
-              if ((0, _isFunction.default)(next)) {
+              if (lodash_isFunction__WEBPACK_IMPORTED_MODULE_4___default()(next)) {
                 _context.next = 7;
                 break;
               }
@@ -2348,23 +2327,21 @@ function setupCache() {
 
 function setup() {
   var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  config = (0, _merge.default)({}, _config.defaults.axios, config);
+  config = lodash_merge__WEBPACK_IMPORTED_MODULE_3___default()({}, _config__WEBPACK_IMPORTED_MODULE_6__["defaults"].axios, config);
   var cache = setupCache(config.cache);
-  var axiosConfig = (0, _omit.default)(config, ['cache']);
-
-  var api = _axios.default.create((0, _merge.default)({}, axiosConfig, {
+  var axiosConfig = lodash_omit__WEBPACK_IMPORTED_MODULE_2___default()(config, ['cache']);
+  var api = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create(lodash_merge__WEBPACK_IMPORTED_MODULE_3___default()({}, axiosConfig, {
     adapter: cache.adapter
   }));
-
   api.cache = cache.store;
   return api;
 }
 
-var _default = {
+
+/* harmony default export */ __webpack_exports__["default"] = ({
   setup: setup,
   setupCache: setupCache
-};
-exports.default = _default;
+});
 
 /***/ }),
 
@@ -2372,20 +2349,14 @@ exports.default = _default;
 /*!**********************!*\
   !*** ./src/limit.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
 
-
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-__webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -2451,8 +2422,7 @@ function _limit() {
   return _limit.apply(this, arguments);
 }
 
-var _default = limit;
-exports.default = _default;
+/* harmony default export */ __webpack_exports__["default"] = (limit);
 
 /***/ }),
 
@@ -2460,28 +2430,24 @@ exports.default = _default;
 /*!***********************!*\
   !*** ./src/memory.js ***!
   \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es6_object_define_property__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
+/* harmony import */ var core_js_modules_es6_object_define_property__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_object_define_property__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es6_array_iterator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es6.array.iterator */ "./node_modules/core-js/modules/es6.array.iterator.js");
+/* harmony import */ var core_js_modules_es6_array_iterator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_iterator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash_size__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash/size */ "lodash/size");
+/* harmony import */ var lodash_size__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_size__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash/map */ "lodash/map");
+/* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash_map__WEBPACK_IMPORTED_MODULE_4__);
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
-
-__webpack_require__(/*! core-js/modules/es6.array.iterator */ "./node_modules/core-js/modules/es6.array.iterator.js");
-
-__webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-var _size = _interopRequireDefault(__webpack_require__(/*! lodash/size */ "lodash/size"));
-
-var _map = _interopRequireDefault(__webpack_require__(/*! lodash/map */ "lodash/map"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -2492,6 +2458,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
 
 var MemoryStore =
 /*#__PURE__*/
@@ -2508,13 +2477,15 @@ function () {
       var _getItem = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee(key) {
+        var item;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                return _context.abrupt("return", this.store[key] || null);
+                item = this.store[key] || null;
+                return _context.abrupt("return", JSON.parse(item));
 
-              case 1:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -2536,7 +2507,7 @@ function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                this.store[key] = value;
+                this.store[key] = JSON.stringify(value);
                 return _context2.abrupt("return", value);
 
               case 2:
@@ -2609,7 +2580,7 @@ function () {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                return _context5.abrupt("return", (0, _size.default)(this.store));
+                return _context5.abrupt("return", lodash_size__WEBPACK_IMPORTED_MODULE_3___default()(this.store));
 
               case 1:
               case "end":
@@ -2626,7 +2597,7 @@ function () {
   }, {
     key: "iterate",
     value: function iterate(fn) {
-      return Promise.all((0, _map.default)(this.store, function (value, key) {
+      return Promise.all(lodash_map__WEBPACK_IMPORTED_MODULE_4___default()(this.store, function (value, key) {
         return fn(value, key);
       }));
     }
@@ -2635,8 +2606,7 @@ function () {
   return MemoryStore;
 }();
 
-var _default = MemoryStore;
-exports.default = _default;
+/* harmony default export */ __webpack_exports__["default"] = (MemoryStore);
 
 /***/ }),
 
@@ -2644,34 +2614,28 @@ exports.default = _default;
 /*!************************!*\
   !*** ./src/request.js ***!
   \************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/extend */ "lodash/extend");
+/* harmony import */ var lodash_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_extend__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _response__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./response */ "./src/response.js");
+/* harmony import */ var _exclude__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./exclude */ "./src/exclude.js");
+/* harmony import */ var _cache__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cache */ "./src/cache.js");
 
-
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-__webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-var _extend = _interopRequireDefault(__webpack_require__(/*! lodash/extend */ "lodash/extend"));
-
-var _response = _interopRequireDefault(__webpack_require__(/*! ./response */ "./src/response.js"));
-
-var _exclude = _interopRequireDefault(__webpack_require__(/*! ./exclude */ "./src/exclude.js"));
-
-var _cache = __webpack_require__(/*! ./cache */ "./src/cache.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
 
 function request(_x, _x2) {
   return _request.apply(this, arguments);
@@ -2695,7 +2659,7 @@ function _request() {
             };
 
             uuid = config.key(req);
-            config = (0, _extend.default)({}, config, {
+            config = lodash_extend__WEBPACK_IMPORTED_MODULE_1___default()({}, config, {
               uuid: uuid
             });
 
@@ -2704,10 +2668,10 @@ function _request() {
                 args[_key] = arguments[_key];
               }
 
-              return _response.default.apply(void 0, [config, req].concat(args));
+              return _response__WEBPACK_IMPORTED_MODULE_2__["default"].apply(void 0, [config, req].concat(args));
             };
 
-            if (!(0, _exclude.default)(config, req)) {
+            if (!Object(_exclude__WEBPACK_IMPORTED_MODULE_3__["default"])(config, req)) {
               _context.next = 6;
               break;
             }
@@ -2727,7 +2691,7 @@ function _request() {
             return _context.abrupt("return", excludeFromCache());
 
           case 9:
-            if (!(method !== 'get')) {
+            if (!(!req.cache && method !== 'get')) {
               _context.next = 13;
               break;
             }
@@ -2739,11 +2703,22 @@ function _request() {
             return _context.abrupt("return", excludeFromCache());
 
           case 13:
-            _context.prev = 13;
-            _context.next = 16;
-            return (0, _cache.read)(config, req);
+            if (!req.update) {
+              _context.next = 15;
+              break;
+            }
 
-          case 16:
+            return _context.abrupt("return", {
+              config: config,
+              next: next
+            });
+
+          case 15:
+            _context.prev = 15;
+            _context.next = 18;
+            return Object(_cache__WEBPACK_IMPORTED_MODULE_4__["read"])(config, req);
+
+          case 18:
             res = _context.sent;
             res.config = req;
             res.request = {
@@ -2754,36 +2729,35 @@ function _request() {
               next: res
             });
 
-          case 22:
-            _context.prev = 22;
-            _context.t0 = _context["catch"](13);
+          case 24:
+            _context.prev = 24;
+            _context.t0 = _context["catch"](15);
 
             if (!(config.clearOnStale && _context.t0.reason === 'cache-stale')) {
-              _context.next = 27;
+              _context.next = 29;
               break;
             }
 
-            _context.next = 27;
+            _context.next = 29;
             return config.store.removeItem(uuid);
 
-          case 27:
+          case 29:
             return _context.abrupt("return", {
               config: config,
               next: next
             });
 
-          case 28:
+          case 30:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[13, 22]]);
+    }, _callee, this, [[15, 24]]);
   }));
   return _request.apply(this, arguments);
 }
 
-var _default = request;
-exports.default = _default;
+/* harmony default export */ __webpack_exports__["default"] = (request);
 
 /***/ }),
 
@@ -2791,30 +2765,23 @@ exports.default = _default;
 /*!*************************!*\
   !*** ./src/response.js ***!
   \*************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _limit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./limit */ "./src/limit.js");
+/* harmony import */ var _cache__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cache */ "./src/cache.js");
 
-
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-__webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-var _limit = _interopRequireDefault(__webpack_require__(/*! ./limit */ "./src/limit.js"));
-
-var _cache = __webpack_require__(/*! ./cache */ "./src/cache.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
 
 function response(_x, _x2, _x3) {
   return _response.apply(this, arguments);
@@ -2824,7 +2791,7 @@ function _response() {
   _response = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee(config, req, res) {
-    var _res$request, request;
+    var _res$request, request, maxAge;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -2841,29 +2808,30 @@ function _response() {
 
           case 3:
             if (config.excludeFromCache) {
-              _context.next = 11;
+              _context.next = 12;
               break;
             }
 
-            config.expires = config.maxAge === 0 ? 0 : Date.now() + config.maxAge;
+            maxAge = req.maxAge || config.maxAge;
+            config.expires = maxAge === 0 ? 0 : Date.now() + maxAge;
 
             if (!config.limit) {
-              _context.next = 9;
+              _context.next = 10;
               break;
             }
 
             config.debug("Detected limit: ".concat(config.limit));
-            _context.next = 9;
-            return (0, _limit.default)(config);
+            _context.next = 10;
+            return Object(_limit__WEBPACK_IMPORTED_MODULE_1__["default"])(config);
 
-          case 9:
-            _context.next = 11;
-            return (0, _cache.write)(config, req, res);
-
-          case 11:
-            return _context.abrupt("return", res);
+          case 10:
+            _context.next = 12;
+            return Object(_cache__WEBPACK_IMPORTED_MODULE_2__["write"])(config, req, res);
 
           case 12:
+            return _context.abrupt("return", res);
+
+          case 13:
           case "end":
             return _context.stop();
         }
@@ -2873,8 +2841,7 @@ function _response() {
   return _response.apply(this, arguments);
 }
 
-var _default = response;
-exports.default = _default;
+/* harmony default export */ __webpack_exports__["default"] = (response);
 
 /***/ }),
 
@@ -2882,22 +2849,14 @@ exports.default = _default;
 /*!**************************!*\
   !*** ./src/serialize.js ***!
   \**************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/omit */ "lodash/omit");
+/* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_omit__WEBPACK_IMPORTED_MODULE_0__);
 
-
-__webpack_require__(/*! core-js/modules/es6.object.define-property */ "./node_modules/core-js/modules/es6.object.define-property.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _omit = _interopRequireDefault(__webpack_require__(/*! lodash/omit */ "lodash/omit"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function serialize(config, req, res) {
   if (res.data) {
@@ -2909,11 +2868,10 @@ function serialize(config, req, res) {
     }
   }
 
-  return (0, _omit.default)(res, ['request', 'config']);
+  return lodash_omit__WEBPACK_IMPORTED_MODULE_0___default()(res, ['request', 'config']);
 }
 
-var _default = serialize;
-exports.default = _default;
+/* harmony default export */ __webpack_exports__["default"] = (serialize);
 
 /***/ }),
 
