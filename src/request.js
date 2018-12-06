@@ -1,4 +1,5 @@
 import extend from 'lodash/extend'
+import { isOffline } from './utils'
 
 import response from './response'
 import exclude from './exclude'
@@ -28,8 +29,8 @@ async function request (config, req) {
     return excludeFromCache()
   }
 
-  // Proceed with request if update option is specified
-  if (req.update) {
+  // Proceed with request if `update` option is specified && user is not offline
+  if (req.update && !isOffline()) {
     return { config, next }
   }
 
