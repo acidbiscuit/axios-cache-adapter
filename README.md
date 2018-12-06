@@ -216,6 +216,8 @@ All the other parameters passed in the `options` will be passed directly to the 
 `setup()` returns an instance of `axios` pre-configured with the cache adapter.
 The cache `store` is conveniently attached to the `axios` instance as `instance.cache` for easy access.
 
+All the other parameters passed in the `options` will be passed directly to the [`axios.create`](https://github.com/mzabriskie/axios#creating-an-instance) method.
+
 ### axios(config)
 
 It is also possible to provide cache configuration per request.
@@ -225,8 +227,6 @@ It is also possible to provide cache configuration per request.
 * `cache {Boolean}`: By default, only requests with `get` method are cached. Set request `cache` option to `true` to cache regardless of the method.
 * `maxAge {Number}`: Set maximum time for storing request in milliseconds. Will overwrite instance setup option value.
 * `networkFirst {Boolean}`: Make a request, if user is online, regardless of cache availability in store. 
-
-All the other parameters passed in the `options` will be passed directly to the [`axios.create`](https://github.com/mzabriskie/axios#creating-an-instance) method.
 
 ## Building
 
