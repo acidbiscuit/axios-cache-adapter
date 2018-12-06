@@ -202,7 +202,7 @@ module.exports = function (it) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.5.7' };
+var core = module.exports = { version: '2.6.0' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -1881,12 +1881,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_isString__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_isString__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash_isFunction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/isFunction */ "lodash/isFunction");
 /* harmony import */ var lodash_isFunction__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_isFunction__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _serialize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./serialize */ "./src/serialize.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ "./src/utils.js");
+/* harmony import */ var _serialize__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./serialize */ "./src/serialize.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -1908,7 +1910,7 @@ function _write() {
             _context.prev = 0;
             entry = {
               expires: config.expires,
-              data: Object(_serialize__WEBPACK_IMPORTED_MODULE_3__["default"])(config, req, res)
+              data: Object(_serialize__WEBPACK_IMPORTED_MODULE_4__["default"])(config, req, res)
             };
             _context.next = 4;
             return config.store.setItem(config.uuid, entry);
@@ -1964,7 +1966,7 @@ function _read() {
   _read = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee2(config, req) {
-    var uuid, entry, error, expires, data, offline, _error;
+    var uuid, entry, error, expires, data, _error;
 
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
@@ -1991,10 +1993,8 @@ function _read() {
           case 10:
             expires = entry.expires, data = entry.data; // Do not check for stale cache if offline
 
-            offline = 'onLine' in navigator && !navigator.onLine;
-
-            if (!(!offline && expires !== 0 && expires < Date.now())) {
-              _context2.next = 18;
+            if (!(!Object(_utils__WEBPACK_IMPORTED_MODULE_3__["isOffline"])() && expires !== 0 && expires < Date.now())) {
+              _context2.next = 17;
               break;
             }
 
@@ -2004,11 +2004,11 @@ function _read() {
             _error.message = 'Entry is stale';
             throw _error;
 
-          case 18:
+          case 17:
             config.debug('cache-hit', req.url);
             return _context2.abrupt("return", data);
 
-          case 20:
+          case 19:
           case "end":
             return _context2.stop();
         }
@@ -2493,9 +2493,11 @@ function () {
         }, _callee, this);
       }));
 
-      return function getItem(_x) {
+      function getItem(_x) {
         return _getItem.apply(this, arguments);
-      };
+      }
+
+      return getItem;
     }()
   }, {
     key: "setItem",
@@ -2518,9 +2520,11 @@ function () {
         }, _callee2, this);
       }));
 
-      return function setItem(_x2, _x3) {
+      function setItem(_x2, _x3) {
         return _setItem.apply(this, arguments);
-      };
+      }
+
+      return setItem;
     }()
   }, {
     key: "removeItem",
@@ -2542,9 +2546,11 @@ function () {
         }, _callee3, this);
       }));
 
-      return function removeItem(_x4) {
+      function removeItem(_x4) {
         return _removeItem.apply(this, arguments);
-      };
+      }
+
+      return removeItem;
     }()
   }, {
     key: "clear",
@@ -2566,9 +2572,11 @@ function () {
         }, _callee4, this);
       }));
 
-      return function clear() {
+      function clear() {
         return _clear.apply(this, arguments);
-      };
+      }
+
+      return clear;
     }()
   }, {
     key: "length",
@@ -2590,9 +2598,11 @@ function () {
         }, _callee5, this);
       }));
 
-      return function length() {
+      function length() {
         return _length.apply(this, arguments);
-      };
+      }
+
+      return length;
     }()
   }, {
     key: "iterate",
@@ -2623,14 +2633,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var lodash_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/extend */ "lodash/extend");
 /* harmony import */ var lodash_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_extend__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _response__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./response */ "./src/response.js");
-/* harmony import */ var _exclude__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./exclude */ "./src/exclude.js");
-/* harmony import */ var _cache__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cache */ "./src/cache.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "./src/utils.js");
+/* harmony import */ var _response__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./response */ "./src/response.js");
+/* harmony import */ var _exclude__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./exclude */ "./src/exclude.js");
+/* harmony import */ var _cache__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./cache */ "./src/cache.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -2668,10 +2680,10 @@ function _request() {
                 args[_key] = arguments[_key];
               }
 
-              return _response__WEBPACK_IMPORTED_MODULE_2__["default"].apply(void 0, [config, req].concat(args));
+              return _response__WEBPACK_IMPORTED_MODULE_3__["default"].apply(void 0, [config, req].concat(args));
             };
 
-            if (!Object(_exclude__WEBPACK_IMPORTED_MODULE_3__["default"])(config, req)) {
+            if (!Object(_exclude__WEBPACK_IMPORTED_MODULE_4__["default"])(config, req)) {
               _context.next = 6;
               break;
             }
@@ -2703,7 +2715,7 @@ function _request() {
             return _context.abrupt("return", excludeFromCache());
 
           case 13:
-            if (!req.update) {
+            if (!(req.networkFirst && !Object(_utils__WEBPACK_IMPORTED_MODULE_2__["isOffline"])())) {
               _context.next = 15;
               break;
             }
@@ -2716,7 +2728,7 @@ function _request() {
           case 15:
             _context.prev = 15;
             _context.next = 18;
-            return Object(_cache__WEBPACK_IMPORTED_MODULE_4__["read"])(config, req);
+            return Object(_cache__WEBPACK_IMPORTED_MODULE_5__["read"])(config, req);
 
           case 18:
             res = _context.sent;
@@ -2872,6 +2884,22 @@ function serialize(config, req, res) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (serialize);
+
+/***/ }),
+
+/***/ "./src/utils.js":
+/*!**********************!*\
+  !*** ./src/utils.js ***!
+  \**********************/
+/*! exports provided: isOffline */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isOffline", function() { return isOffline; });
+function isOffline() {
+  return 'navigator' in window && 'onLine' in navigator && !navigator.onLine;
+}
 
 /***/ }),
 
