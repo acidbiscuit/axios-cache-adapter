@@ -1,5 +1,6 @@
 import isString from 'lodash/isString'
 import isFunction from 'lodash/isFunction'
+import { isOffline } from './utils'
 
 import serialize from './serialize'
 
@@ -46,8 +47,7 @@ async function read (config, req) {
   const { expires, data } = entry
 
   // Do not check for stale cache if offline
-  const offline = 'onLine' in navigator && !navigator.onLine
-  if (!offline && expires !== 0 && (expires < Date.now())) {
+  if (!isOffline() && expires !== 0 && (expires < Date.now())) {
     config.debug('cache-stale', req.url)
     const error = new Error()
 
