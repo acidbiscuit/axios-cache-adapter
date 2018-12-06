@@ -29,8 +29,8 @@ async function request (config, req) {
     return excludeFromCache()
   }
 
-  // Proceed with request if `update` option is specified && user is not offline
-  if (req.update && !isOffline()) {
+  // Proceed with request if `networkFirst` option is specified && user is not offline
+  if (req.networkFirst && !isOffline()) {
     return { config, next }
   }
 
